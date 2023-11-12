@@ -14,7 +14,7 @@ class Category(models.Model):
 	def __str__(self):
 		return self.title
 
-class Article(models.Model):
+class Post(models.Model):
 	STATUS_CHOICE=[
 		('d','draft'),
 		('p','publish'),

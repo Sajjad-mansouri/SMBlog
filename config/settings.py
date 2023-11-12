@@ -43,7 +43,10 @@ class Dev(Configuration):
         'django.contrib.staticfiles',
         #myapp
         'account',
-        'blog'
+        'blog',
+
+        #api
+        'rest_framework'
     ]
 
     MIDDLEWARE = [

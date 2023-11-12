@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Article,Category
+from .models import Post,Category
 
-@admin.register(Article)
+@admin.register(Post)
 class ArticleAdmin(admin.ModelAdmin):
     list_display=('title','slug','author','status','published')
     list_filter=('published','status')
