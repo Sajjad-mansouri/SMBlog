@@ -46,7 +46,8 @@ class Dev(Configuration):
         'blog',
 
         #api
-        'rest_framework'
+        'rest_framework',
+        'rest_framework_simplejwt',
     ]
 
     MIDDLEWARE = [
@@ -136,6 +137,18 @@ class Dev(Configuration):
 
     #custom user
     AUTH_USER_MODEL = "account.MyUser"
+
+
+    #DRF
+
+    REST_FRAMEWORK = {
+        "DEFAULT_AUTHENTICATION_CLASSES": [
+            "rest_framework.authentication.BasicAuthentication",
+            "rest_framework.authentication.SessionAuthentication",
+            "rest_framework.authentication.TokenAuthentication",
+            "rest_framework_simplejwt.authentication.JWTAuthentication",
+        ],
+        }
 
 
 class Prod(Dev):
