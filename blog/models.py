@@ -28,7 +28,7 @@ class Post(models.Model):
 	author=models.ForeignKey(settings.AUTH_USER_MODEL,null=True,on_delete=models.SET_NULL,related_name='articles')
 	category=models.ManyToManyField(Category,related_name='articles')
 	description=models.TextField()
-	thumbnail=models .ImageField(upload_to='article-image')
+	thumbnail=models .ImageField(upload_to='article-image',null=True)
 	published=models.DateTimeField(default=timezone.now)
 	created=models.DateTimeField(auto_now_add=True)
 	updated=models.DateTimeField(auto_now=True)
