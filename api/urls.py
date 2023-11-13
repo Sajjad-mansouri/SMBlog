@@ -10,7 +10,11 @@ router = DefaultRouter()
 router.register(r'posts', PostApiViewSet, basename='posts')
 
 urlpatterns = [
-
+	path(
+		"posts/by-time/<str:period_name>/",
+		PostApiViewSet.as_view({"get": "list"}),
+		name="posts-by-time",
+		),
 	path("categories/", CategoryList.as_view(),name='api_category_list'),
 	path("categories/<int:pk>", CategoryPostList.as_view(),name='api_category_post_list'),
 
