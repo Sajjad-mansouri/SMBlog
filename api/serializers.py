@@ -2,10 +2,14 @@ from rest_framework import serializers
 from blog.models import Post,Category
 
 class PostSerializer(serializers.ModelSerializer):
+	category=serializers.HyperlinkedRelatedField(
+	    many=True,
+	    read_only=True,
+	    view_name='api_category_post_list'
+	)
 	class Meta:
 		model = Post
-		fields = "__all__"
-		read_only_fields =["updated", "created"]
+		exclude = ['created','updated']
 
 class CategorySerializer(serializers.ModelSerializer):
 	class Meta:

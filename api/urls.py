@@ -6,11 +6,11 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
-	path("posts/", PostList.as_view()),
-	path("posts/<int:pk>", PostDetail.as_view()),
+	path("posts/", PostList.as_view(),name='api_post_list'),
+	path("posts/<int:pk>", PostDetail.as_view(),name='api_post_detail'),
 
-	path("categories/", CategoryList.as_view()),
-	path("categories/<int:pk>", CategoryPostList.as_view()),
+	path("categories/", CategoryList.as_view(),name='api_category_list'),
+	path("categories/<int:pk>", CategoryPostList.as_view(),name='api_category_post_list'),
 
 	path("auth/", include("rest_framework.urls")),
 
