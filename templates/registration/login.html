@@ -1,0 +1,28 @@
+{%extends 'base.html'%}
+{% load crispy_forms_tags %}
+{%block body%}
+
+<main class="form-signin w-25 mt-5 mx-auto text-center">
+
+  <form method='POST' >
+{%csrf_token%}
+    <h1 class="h3 mb-3 fw-normal">sign in</h1>
+
+{{form|crispy}}
+
+
+    <button class="btn btn-primary w-50 py-2 " type="submit">Sign in</button>
+    <div>
+      <div>
+        <span>forgot password?</span>
+      </div>
+      <div>
+        <span>signup</span>    
+      </div>   
+     
+    </div>
+  </form>
+</main>
+
+
+{%endblock%}

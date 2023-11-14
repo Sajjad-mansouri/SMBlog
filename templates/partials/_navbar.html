@@ -1,6 +1,13 @@
 
-{%for cat in category%}
-        <li class="nav-item">
-          <a class="nav-link" href="{%url 'blog:category_post_list' cat.slug %}">{{cat.title}}</a>
+         <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            category
+          </a>
+          <ul class="dropdown-menu">
+            {%for cat in category%}
+            <li><a class="dropdown-item" href="#">{{cat.title}}</a></li>
+            {%endfor%}
+
+          </ul>
         </li>
-{%endfor%}
+

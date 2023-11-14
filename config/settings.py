@@ -51,7 +51,9 @@ class Dev(Configuration):
         #myapp
         'account',
         'blog',
-
+        #
+        'crispy_forms',
+        "crispy_bootstrap5",
         #api
         'rest_framework',
         'rest_framework_simplejwt',
@@ -149,6 +151,12 @@ class Dev(Configuration):
     #custom user
     AUTH_USER_MODEL = "account.MyUser"
 
+    LOGIN_REDIRECT_URL='blog:index'
+    LOGOUT_REDIRECT_URL='blog:index'
+
+    CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+    CRISPY_TEMPLATE_PACK = "bootstrap5"
 
     #DRF
 
