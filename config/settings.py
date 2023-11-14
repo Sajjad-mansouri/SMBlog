@@ -157,7 +157,20 @@ class Dev(Configuration):
             "rest_framework.authentication.TokenAuthentication",
             "rest_framework_simplejwt.authentication.JWTAuthentication",
         ],
+        "DEFAULT_THROTTLE_CLASSES": [
+            "api.throttling.AnonSustainedThrottle",
+            "api.throttling.AnonBurstThrottle",
+            "api.throttling.UserSustainedThrottle",
+            "api.throttling.UserBurstThrottle",
+            ],
+        "DEFAULT_THROTTLE_RATES": {
+            "anon_sustained": "500/day",
+            "anon_burst": "10/minute",
+            "user_sustained": "5000/day",
+            "user_burst": "100/minute",
+            },
         }
+
 
 
 class Prod(Dev):
