@@ -11,12 +11,13 @@ from rest_framework.exceptions import ValidationError
 from blog.models import Post,Category
 from .permissions import IsAuthorOrReadonly,IsSuperUser
 from .pagination import CustomPagination
-
+from .filters import PostFilterSet
 
 class PostApiViewSet(viewsets.ModelViewSet):
 	queryset = Post.objects.all()
 	serializer_class = PostSerializer
 	pagination_class=CustomPagination
+	filterset_class=PostFilterSet
 
 	@method_decorator(cache_page(300))
 	@method_decorator(vary_on_headers("Authorization",'Cookie'))
