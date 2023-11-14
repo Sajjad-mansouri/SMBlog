@@ -10,11 +10,13 @@ from django.http import Http404
 from rest_framework.exceptions import ValidationError
 from blog.models import Post,Category
 from .permissions import IsAuthorOrReadonly,IsSuperUser
+from .pagination import CustomPagination
 
 
 class PostApiViewSet(viewsets.ModelViewSet):
 	queryset = Post.objects.all()
 	serializer_class = PostSerializer
+	pagination_class=CustomPagination
 
 	@method_decorator(cache_page(300))
 	@method_decorator(vary_on_headers("Authorization",'Cookie'))
@@ -53,10 +55,12 @@ class CategoryList(generics.ListCreateAPIView):
 	queryset = Category.objects.all()
 	serializer_class = CategorySerializer
 	permission_classes=[IsSuperUser]
+	pagination_class=None
 
 
 class CategoryPostList(generics.ListAPIView):
 	serializer_class = PostSerializer
+	pagination_class=CustomPagination
 
 	def get_queryset(self):
 
