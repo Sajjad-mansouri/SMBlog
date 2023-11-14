@@ -38,4 +38,4 @@ class Post(models.Model):
 		return self.title
 
 	class Meta:
-		ordering=['published']
+		ordering=['-published']
