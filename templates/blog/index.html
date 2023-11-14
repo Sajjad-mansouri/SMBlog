@@ -5,6 +5,11 @@
 
 
 	<div class="col-9">
+		{%if category%}
+<div class="alert alert-dark" role="alert">
+  Category : {{category}}
+</div>
+{%endif%}
 		{%for post in posts%}
 			<div class="card mb-3" >
 			  <div class="row g-0">
@@ -13,11 +18,11 @@
 			    </div>
 			    <div class="col-md-8">
 			      <div class="card-body">
-			        <h5 class="card-title"><a href="">{{post.title}}</a></h5>
+			        <h5 class="card-title"><a href="{%url 'blog:post_detail' post.pk%}">{{post.title}}</a></h5>
 			        <p class="card-text">{{post.description|truncatewords:50}}</p>
 			        <p class="card-text"><small class="text-body-secondary">{{post.published|naturaltime}}</small></p>
 			        {%for category in post.category.all%}
-			       <a href=""><span class="badge text-bg-secondary">{{category.title}}</span></a> 
+			       <a href="{% url 'blog:category_post_list' category.slug %}"><span class="badge text-bg-secondary">{{category.title}}</span></a> 
 			        {%endfor%}
 			      </div>
 			    </div>
@@ -61,5 +66,7 @@
 		  </ul>
 		</nav>
 	</div>
+
+
 
 {%endblock%}
