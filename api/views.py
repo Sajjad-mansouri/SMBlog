@@ -18,6 +18,7 @@ class PostApiViewSet(viewsets.ModelViewSet):
 	serializer_class = PostSerializer
 	pagination_class=CustomPagination
 	filterset_class=PostFilterSet
+	ordering_fields=['published','status','title']
 
 	@method_decorator(cache_page(300))
 	@method_decorator(vary_on_headers("Authorization",'Cookie'))
