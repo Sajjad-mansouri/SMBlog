@@ -36,6 +36,7 @@ class Search(ListView):
 	context_object_name='posts'
 
 	def get_queryset(self):
+		print('queryset')
 		self.search_var=self.request.GET.get('search')
 		try:
 			post=Post.objects.filter(
@@ -45,6 +46,7 @@ class Search(ListView):
 				)&
 				Q(status='p')
 				)
+			print(post)
 		except ValueError:
 			post=Post.objects.filter(status='p')
 

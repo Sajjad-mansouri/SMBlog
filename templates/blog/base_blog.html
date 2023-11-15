@@ -31,7 +31,7 @@
         </li>
        
       </ul>
-      <form class="d-flex"  method='GET' >
+      <form class="d-flex"  method='GET' action="{%url 'blog:search_result'%}" >
         <input class="form-control me-2" type="text" placeholder="Search" name='search' aria-label="Search">
         <button class="btn btn-outline-success" type="submit" >Search</button>
       </form>
@@ -41,7 +41,8 @@
   </div>
 </nav>
 
-{%if request.path == '/'%}
+
+{%if request.get_full_path == '/'%}
   <!-- carousel -->
 <div id="carouselExampleDark" class="carousel carousel-dark slide">
   <div class="carousel-indicators">
@@ -89,26 +90,7 @@
 
 	{%block content%}
 	{%endblock%}
-{%if 'post' not in request.path  %}
 
-
-  <div class="col-3">
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-          </div>
-        </div>
-         <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-          </div>
-        </div>
-  </div>
-{%endif%}
 </div>
 </div>
 
