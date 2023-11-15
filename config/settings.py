@@ -158,6 +158,13 @@ class Dev(Configuration):
 
     CRISPY_TEMPLATE_PACK = "bootstrap5"
 
+  
+    EMAIL_BACKEND = config('EMAIL_BACKEND')
+    EMAIL_HOST = config('EMAIL_HOST')
+    EMAIL_HOST_USER =config('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+    EMAIL_USE_TLS = True
+    EMAIL_PORT = config('EMAIL_PORT')
     #DRF
 
     REST_FRAMEWORK = {
