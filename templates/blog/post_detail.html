@@ -1,4 +1,6 @@
 {%extends 'blog/base_blog.html'%}
+{% load comment_tags %}
+
 {% load humanize %}
 
 {%block content%}
@@ -11,7 +13,7 @@
 
   </div>
 </div>
-<div class="col">
+<div class="col text-center">
 		
 			<div class="card mb-3" >
 			  <div class="row g-0">
@@ -33,5 +35,5 @@
 
 
 </div>
-
+{% render_comments post request %}
 {%endblock%}

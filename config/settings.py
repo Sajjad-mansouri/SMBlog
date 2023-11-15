@@ -54,6 +54,7 @@ class Dev(Configuration):
         #
         'crispy_forms',
         "crispy_bootstrap5",
+        'comment',
         #api
         'rest_framework',
         'rest_framework_simplejwt',

@@ -1,6 +1,9 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from django.contrib.contenttypes.fields import GenericRelation
+from django.urls import reverse
+from comment.models import Comment
 
 class Category(models.Model):
 	parent=models.ForeignKey('self',default=None,null=True,blank=True,on_delete=models.SET_NULL,related_name='children')
@@ -13,6 +16,8 @@ class Category(models.Model):
 		ordering=['parent__id']
 	def __str__(self):
 		return self.title
+	def get_absolute_url(self):
+		return reverse('post_detail_url', kwargs={'slug': self.slug})
 
 class Post(models.Model):
 	STATUS_CHOICE=[
@@ -33,6 +38,7 @@ class Post(models.Model):
 	created=models.DateTimeField(auto_now_add=True)
 	updated=models.DateTimeField(auto_now=True)
 	status=models.CharField(max_length=1,choices=STATUS_CHOICE)
+	comments = GenericRelation(Comment)
 
 	def __str__(self):
 		return self.title
