@@ -5,7 +5,7 @@
           </a>
           <ul class="dropdown-menu">
             {%for cat in category%}
-            <li><a class="dropdown-item" href="#">{{cat.title}}</a></li>
+            <li><a class="dropdown-item" href="{%url 'blog:category_post_list' cat.slug%}">{{cat.title}}</a></li>
             {%endfor%}
 
           </ul>

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView,DetailView
+from django.db.models import Q
 from .models import Post,Category
 
 
@@ -28,4 +29,28 @@ class CategoryPostList(ListView):
 	def get_context_data(self,**kwargs):
 		kwargs=super().get_context_data(**kwargs)
 		kwargs['category']=self.category
+		return kwargs
+
+class Search(ListView):
+	template_name='blog/index.html'
+	context_object_name='posts'
+
+	def get_queryset(self):
+		self.search_var=self.request.GET.get('search')
+		try:
+			post=Post.objects.filter(
+				(Q(title__icontains=self.search_var)|
+				Q(description__icontains=self.search_var)|
+				Q(author__first_name__icontains=self.search_var)
+				)&
+				Q(status='p')
+				)
+		except ValueError:
+			post=Post.objects.filter(status='p')
+
+
+		return post
+	def get_context_data(self,**kwargs):
+		kwargs=super().get_context_data(**kwargs)
+		kwargs['search']=self.search_var
 		return kwargs

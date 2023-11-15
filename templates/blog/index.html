@@ -5,9 +5,15 @@
 
 
 	<div class="col-9">
-		{%if category%}
+{%if category%}
 <div class="alert alert-dark" role="alert">
   Category : {{category}}
+</div>
+{%endif%}
+
+{%if search%}
+<div class="alert alert-dark" role="alert">
+  search : {{search}}
 </div>
 {%endif%}
 		{%for post in posts%}

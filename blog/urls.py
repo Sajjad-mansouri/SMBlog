@@ -7,5 +7,7 @@ urlpatterns=[
 	path('',views.Index.as_view(),name='index'),
 	path('post/<int:pk>/',views.PostDetailView.as_view(),name='post_detail'),
 	path('category/<slug:cat>/',views.CategoryPostList.as_view(),name='category_post_list'),
+	path('search/',views.Search.as_view(),name='search_result'),
+
 
 ]
