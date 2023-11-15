@@ -1,11 +1,12 @@
+Dear {{ user.get_username }},
 
-You're receiving this email because  you registere in  {{ site_name }} ,for active your account Please go to the following :
+Welcome to {{ site_name }} !, You Succeessfully created an account ,now let's
+complete your registration:
 
-{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}
+{{ protocol }}://{{ domain }}{% url 'email_confirm' uidb64=uid token=token %}
 
-Your username : {{ user.get_username }}
 
-Thanks for using our site!"
+Thanks for using My site!"
 
 Sajjad Mansouri
 

@@ -4,22 +4,27 @@
 
 <main class="form-signin w-25 mt-5 mx-auto text-center">
 
-  <form method='POST' >
+  <form method='POST' class='border p-3 bg-secondary-subtle' >
 {%csrf_token%}
-    <h1 class="h3 mb-3 fw-normal">sign in</h1>
+
+    <h1 class="h3 mb-3 fw-normal-start">sign in</h1>
 
 {{form|crispy}}
 
 
     <button class="btn btn-primary w-50 py-2 " type="submit">Sign in</button>
+
     <div>
       <div>
         <span>forgot password?</span>
       </div>
       <div>
-        <span><a href="{%url 'register'%}">signup</a></span>    
+        <a href="{%url 'register'%}"><span class='badge bg-secondary'>signup</span>  </a>
+        <a href="{%url 'blog:index'%}"><span class="badge bg-secondary">Home</span></a>  
       </div>   
-     
+
+    
+
     </div>
   </form>
 </main>

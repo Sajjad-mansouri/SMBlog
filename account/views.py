@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from django.views.generic import CreateView
+from django.views.generic import CreateView,TemplateView
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
 
 #for registration
-from .send_confirmation import EmailConfirmation
+from .confirmation import EmailConfirmation
 from .forms import CustomCreationForm
 
 class Register(CreateView):
@@ -18,8 +19,7 @@ class Register(CreateView):
 		self.object=form.save(commit=False)
 		self.object.is_active=False
 		self.object.save()
-
 		email_conf=EmailConfirmation(email=self.object.email,request=self.request)
 		email_conf.save()
-		return super().form_valid(form)
+		return HttpResponseRedirect(self.get_success_url())
 
