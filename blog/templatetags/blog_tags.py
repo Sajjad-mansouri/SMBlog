@@ -11,14 +11,16 @@ def navbar(context):
 	'request':request
 	}
 
-
 @register.inclusion_tag("partials/_pagination.html",takes_context=True)
 def pagination(context):
 	return {
 	'page_obj':context['page_obj'],
 	}
 
-
+@register.inclusion_tag("partials/_status_tag.html")
+def status_tag(status):
+	print('******',status)
+	return {'status':status}
 
 
 

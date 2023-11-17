@@ -1,0 +1,11 @@
+{%if status == 'p' %}
+			        
+<span class="badge text-bg-success">publish</span>
+
+{%elif status == 'd' %}
+<span class="badge text-bg-Secondary">draft</span>
+{%elif status == 'r' %}
+<span class="badge text-bg-danger">reject</span>
+{%elif status == 'i' %}
+<span class="badge text-bg-Info">sent to admin</span>
+{%endif%}

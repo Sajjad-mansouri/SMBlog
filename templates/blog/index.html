@@ -25,7 +25,7 @@
 			    <div class="col-md-8">
 			      <div class="card-body">
 			        <h5 class="card-title"><a href="{%url 'blog:post_detail' post.pk%}">{{post.title}}</a></h5>
-			        <p class="card-text">{{post.description|truncatewords:50|linebreaks}}</p>
+			        <p class="card-text">{{post.description|safe|truncatewords:50|linebreaks}}</p>
 			        <p class="card-text"><small class="text-body-secondary">{{post.published|naturaltime}}</small></p>
 			        {%for category in post.category.all%}
 			       <a href="{% url 'blog:category_post_list' category.slug %}"><span class="badge text-bg-secondary">{{category.title}}</span></a> 

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import CreateView,TemplateView,UpdateView
+from django.views.generic import CreateView,ListView,UpdateView
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect
@@ -41,3 +41,15 @@ class CreatePost(CreateView):
 	template_name='registration/create_post.html'
 	form_class=PostForm
 	success_url=reverse_lazy('blog:index')
+
+	def get_success_url(self):
+		return reverse('author-posts',args=(self.request.user.pk,))
+
+class AuthorPostList(ListView):
+	template_name='registration/post_list.html'
+
+	def get_queryset(self):
+		user=self.request.user
+		posts=Post.objects.filter(author=user)
+		return posts
+
