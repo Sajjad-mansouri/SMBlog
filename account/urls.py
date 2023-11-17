@@ -4,6 +4,7 @@ from . import confirmation
 
 urlpatterns=[
     path('profile/<int:pk>/',views.Profile.as_view(),name='profile'),
+    path('profile/create-post/',views.CreatePost.as_view(),name='create-post'),
 	path('register/',views.Register.as_view(),name='register'),
     path(
         "confirm/<uidb64>/<token>/",

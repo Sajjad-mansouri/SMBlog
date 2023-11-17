@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth import get_user_model
+from blog.models import Post
 
 class CustomCreationForm(UserCreationForm):
 	email=forms.EmailField()
@@ -19,3 +20,9 @@ class UserProfileForm(forms.ModelForm):
 	class Meta:
 		model=get_user_model()
 		fields=['first_name','last_name','username','email','is_author','profile_image']
+
+class PostForm(forms.ModelForm):
+
+	class Meta:
+		model=Post
+		fields='__all__'

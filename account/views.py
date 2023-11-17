@@ -3,7 +3,8 @@ from django.views.generic import CreateView,TemplateView,UpdateView
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect
-from .forms import  UserProfileForm
+from .forms import  UserProfileForm,PostForm
+from blog.models import Post
 
 #for registration
 from .confirmation import EmailConfirmation
@@ -33,3 +34,10 @@ class Profile(UpdateView):
 
 	def get_success_url(self):
 		return reverse('profile',args=(self.request.user.pk,))
+
+
+class CreatePost(CreateView):
+	model=Post
+	template_name='registration/create_post.html'
+	form_class=PostForm
+	success_url=reverse_lazy('blog:index')
