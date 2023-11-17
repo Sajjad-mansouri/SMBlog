@@ -1,13 +1,15 @@
 from django.shortcuts import render
-from django.views.generic import CreateView,TemplateView
+from django.views.generic import CreateView,TemplateView,UpdateView
 from django.contrib.auth import get_user_model
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect
+from .forms import  UserProfileForm
 
 #for registration
 from .confirmation import EmailConfirmation
 from .forms import CustomCreationForm
 
+User_Model=get_user_model()
 class Register(CreateView):
 	model=get_user_model()
 	form_class=CustomCreationForm
@@ -23,3 +25,11 @@ class Register(CreateView):
 		email_conf.save()
 		return HttpResponseRedirect(self.get_success_url())
 
+
+class Profile(UpdateView):
+	model=User_Model
+	template_name='registration/profile.html'
+	form_class=UserProfileForm
+
+	def get_success_url(self):
+		return reverse('profile',args=(self.request.user.pk,))

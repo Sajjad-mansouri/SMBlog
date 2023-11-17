@@ -3,9 +3,13 @@ from blog.models import Category
 
 register = template.Library()
 
-@register.inclusion_tag("partials/_navbar.html")
-def navbar():
-	return {'category':Category.objects.filter(status=True)}
+@register.inclusion_tag("partials/_navbar.html",takes_context=True)
+def navbar(context):
+	request=context['request']
+	return {
+	'category':Category.objects.filter(status=True),
+	'request':request
+	}
 
 
 @register.inclusion_tag("partials/_pagination.html",takes_context=True)
@@ -15,11 +19,7 @@ def pagination(context):
 	}
 
 
-@register.filter(name='range')
-def filter_range(start, end):
-	if start>end:
-		return range(end,start+1)
-	return range(start, end+1)
+
 
 
 @register.simple_tag(takes_context=True)

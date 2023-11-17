@@ -10,3 +10,12 @@ class CustomCreationForm(UserCreationForm):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self.fields['password1'].help_text=None
+
+
+class UserProfileForm(forms.ModelForm):
+	def __init__(self,*args,**kwargs):
+		super().__init__(*args,**kwargs)
+		self.fields['is_author'].disabled=True
+	class Meta:
+		model=get_user_model()
+		fields=['first_name','last_name','username','email','is_author']

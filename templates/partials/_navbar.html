@@ -1,4 +1,28 @@
 
+                 {%if request.user.is_authenticated%}
+
+
+         <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Account
+          </a>
+          <ul class="dropdown-menu">
+
+            <li><a class="dropdown-item" href="{%url 'profile' request.user.pk %}">Profile</a></li>
+            <li><a class="dropdown-item" href="{%url 'logout'%}">Logout</a></li>
+
+
+          </ul>
+        </li>
+
+      {%else%}
+        <li class="nav-item">
+          <a class="nav-link text-black" href="{%url 'login'%}">Login</a>
+        </li>
+
+      {%endif%}
+
+
          <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             category
@@ -11,3 +35,6 @@
           </ul>
         </li>
 
+        <li class="nav-item">
+          <a class="nav-link text-black" href="#">About Me</a>
+        </li>
