@@ -18,4 +18,4 @@ class UserProfileForm(forms.ModelForm):
 		self.fields['is_author'].disabled=True
 	class Meta:
 		model=get_user_model()
-		fields=['first_name','last_name','username','email','is_author']
+		fields=['first_name','last_name','username','email','is_author','profile_image']
