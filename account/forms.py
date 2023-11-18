@@ -21,8 +21,17 @@ class UserProfileForm(forms.ModelForm):
 		model=get_user_model()
 		fields=['first_name','last_name','username','email','is_author','profile_image']
 
-class PostForm(forms.ModelForm):
+class SuperUserPostForm(forms.ModelForm):
 
 	class Meta:
 		model=Post
 		fields='__all__'
+
+class AuthorPostForm(SuperUserPostForm):
+	def __init__(self,*args,**kwargs):
+		super().__init__(*args,**kwargs)
+		self.fields['status'].choices=[('d','draft'),('i','investigate')]
+
+	class Meta(SuperUserPostForm.Meta):
+		exclude=['author']
+

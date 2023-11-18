@@ -3,12 +3,13 @@ from django.views.generic import CreateView,ListView,UpdateView
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect
-from .forms import  UserProfileForm,PostForm
+from .forms import  UserProfileForm,AuthorPostForm,SuperUserPostForm
 from blog.models import Post
 
 #for registration
 from .confirmation import EmailConfirmation
 from .forms import CustomCreationForm
+from .mixins import AuthorMixin
 
 User_Model=get_user_model()
 class Register(CreateView):
@@ -36,17 +37,15 @@ class Profile(UpdateView):
 		return reverse('profile',args=(self.request.user.pk,))
 
 
-class CreatePost(CreateView):
+class CreatePost(AuthorMixin,CreateView):
 	model=Post
 	template_name='registration/create_update_post.html'
-	form_class=PostForm
 
 	def get_success_url(self):
 		return reverse('author-posts',args=(self.request.user.pk,))
 
-class UpdatePost(UpdateView):
+class UpdatePost(AuthorMixin,UpdateView):
 	template_name='registration/create_update_post.html'
-	fields='__all__'
 	
 	def get_queryset(self):
 		posts=Post.objects.filter(author=self.request.user)
