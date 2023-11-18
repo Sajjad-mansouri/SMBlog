@@ -38,18 +38,30 @@ class Profile(UpdateView):
 
 class CreatePost(CreateView):
 	model=Post
-	template_name='registration/create_post.html'
+	template_name='registration/create_update_post.html'
 	form_class=PostForm
-	success_url=reverse_lazy('blog:index')
+
+	def get_success_url(self):
+		return reverse('author-posts',args=(self.request.user.pk,))
+
+class UpdatePost(UpdateView):
+	template_name='registration/create_update_post.html'
+	fields='__all__'
+	
+	def get_queryset(self):
+		posts=Post.objects.filter(author=self.request.user)
+		return posts
 
 	def get_success_url(self):
 		return reverse('author-posts',args=(self.request.user.pk,))
 
 class AuthorPostList(ListView):
 	template_name='registration/post_list.html'
+	paginate_by=3
 
 	def get_queryset(self):
 		user=self.request.user
 		posts=Post.objects.filter(author=user)
 		return posts
+
 
