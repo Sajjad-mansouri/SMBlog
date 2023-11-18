@@ -7,6 +7,10 @@ urlpatterns=[
     path('profile/create-post/',views.CreatePost.as_view(),name='create-post'),
     path('profile/<int:pk>/posts/',views.AuthorPostList.as_view(),name='author-posts'),
     path('profile/posts/<int:pk>/',views.UpdatePost.as_view(),name='update-post'),
+    path('profile/posts/<int:pk>/',views.UpdatePost.as_view(),name='update-post'),
+    path('profile/posts/<int:pk>/delete',views.DeletePost.as_view(),name='delete-post'),
+    path('profile/posts/preview/<int:pk>/',views.PostPreview.as_view(),name='post-preview'),
+
 
 
 	path('register/',views.Register.as_view(),name='register'),

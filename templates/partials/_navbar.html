@@ -1,26 +1,40 @@
+    <div class="bg-body-tertiary container-fluid ">
+      <div class="text-start">
+            <a class='text-decoration-none fs-2 text-black' href="{%url 'blog:index'%}">Mansouri Blog</a>
 
-                 {%if request.user.is_authenticated%}
+      </div>
+
+  </div>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary" style="margin-bottom:30px">
+   <div class="container-fluid">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
 
+{%if request.user.is_authenticated%}
          <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Account
           </a>
           <ul class="dropdown-menu">
 
-            <li><a class="dropdown-item" href="{%url 'profile' request.user.pk %}">Profile</a></li>
+            <li><a class="dropdown-item" href="{%url 'author-posts' request.user.pk %}">Profile</a></li>
             <li><a class="dropdown-item" href="{%url 'logout'%}">Logout</a></li>
 
 
           </ul>
         </li>
 
-      {%else%}
+{%else%}
         <li class="nav-item">
           <a class="nav-link text-black" href="{%url 'login'%}">Login</a>
         </li>
 
-      {%endif%}
+{%endif%}
 
 
          <li class="nav-item dropdown">
@@ -38,3 +52,15 @@
         <li class="nav-item">
           <a class="nav-link text-black" href="#">About Me</a>
         </li>
+
+
+      </ul>
+      <form class="d-flex"  method='GET' action="{%url 'blog:search_result'%}" >
+        <input class="form-control me-2" type="text" placeholder="Search" name='search' aria-label="Search">
+        <button class="btn btn-outline-success" type="submit" >Search</button>
+      </form>
+
+      
+    </div>
+  </div>
+</nav>

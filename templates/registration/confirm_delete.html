@@ -1,0 +1,20 @@
+{%extends 'registration/profile_base.html'%}
+{% load crispy_forms_tags %}
+{%block content%}
+<div class="col-lg-8 p-5">
+	<form method="POST" enctype="multipart/form-data">
+		{%csrf_token%}
+		
+		Are you sure to delete this post?
+    <div class="col-sm-9 text-secondary py-3">
+        <input 
+        type="submit"
+         class="btn btn-danger px-4"
+         value="Delete Post"
+          >
+         
+    </div>
+	</form>
+
+</div>
+{%endblock%}

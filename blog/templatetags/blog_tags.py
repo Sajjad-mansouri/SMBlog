@@ -10,6 +10,12 @@ def navbar(context):
 	'category':Category.objects.filter(status=True),
 	'request':request
 	}
+@register.inclusion_tag("partials/_profile_navbar.html",takes_context=True)
+def profile_navbar(context):
+	request=context['request']
+	return {
+	'request':request
+	}
 
 @register.inclusion_tag("partials/_pagination.html",takes_context=True)
 def pagination(context):
@@ -28,6 +34,9 @@ def status_tag(status):
 def active_page(context,page_num):
 	if context['page_obj'].number == page_num:
 		return 'disabled '
+
+
+
 
 @register.tag()
 def create_page_link(parser, token):

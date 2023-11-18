@@ -1,7 +1,20 @@
 from django.http import HttpResponseRedirect
 from .forms import  UserProfileForm,AuthorPostForm,SuperUserPostForm
 from blog.models import Post
-class AuthorMixin:
+
+class AuthorQuerySet:
+	def get_queryset(self):
+		print(dir(self))
+		user=self.request.user
+		if user.is_superuser:
+			posts=Post.objects.all()
+		else:
+			posts=Post.objects.filter(author=user)
+		return posts
+
+
+
+class AuthorMixin(AuthorQuerySet):
 	def get_form(self,form_class=None):
 	
 		if self.request.user.is_superuser:
@@ -22,10 +35,3 @@ class AuthorMixin:
 		form.save_m2m()
 		return HttpResponseRedirect(self.get_success_url())
 
-	def get_queryset(self):
-		user=self.request.user
-		if user.is_superuser:
-			posts=Post.objects.all()
-		else:
-			posts=Post.objects.filter(author=user)
-		return posts

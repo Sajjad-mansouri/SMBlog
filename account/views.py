@@ -1,13 +1,14 @@
 from django.shortcuts import render
-from django.views.generic import CreateView,ListView,UpdateView
+from django.views.generic import CreateView,ListView,UpdateView,DeleteView,DetailView
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import  UserProfileForm,AuthorPostForm,SuperUserPostForm
 from blog.models import Post
 from .forms import CustomCreationForm
-from .mixins import AuthorMixin
+from .mixins import AuthorMixin,AuthorQuerySet
 #for registration
 from .confirmation import EmailConfirmation
 
@@ -51,11 +52,42 @@ class UpdatePost(LoginRequiredMixin,AuthorMixin,UpdateView):
 
 	def get_success_url(self):
 		return reverse('author-posts',args=(self.request.user.pk,))
+	def get_queryset(self):
+		user=self.request.user
+		if user.is_superuser:
+			queryset=Post.objects.all()
+		else:
+			queryset=Post.objects.filter(author=user,status__in=['d','r'])
+		return queryset
 
 class AuthorPostList(LoginRequiredMixin,AuthorMixin,ListView):
 	template_name='registration/post_list.html'
-	paginate_by=3
+	paginate_by=5
 
 
 
+
+class DeletePost(LoginRequiredMixin,DeleteView):
+	template_name='registration/confirm_delete.html'
+	def get_success_url(self):
+		return reverse('author-posts',args=(self.request.user.pk,))
+
+	def get_queryset(self):
+		user=self.request.user
+		if user.is_superuser:
+			queryset=Post.objects.all()
+		else:
+			queryset=Post.objects.filter(author=user,status='d')
+		return queryset
+
+class PostPreview(LoginRequiredMixin,DetailView):
+	template_name='blog/post_detail.html'
+	extra_context={'preview':'preview'}
+	def get_queryset(self):
+		user=self.request.user
+		if user.is_superuser:
+			queryset= Post.objects.filter(status!='p')
+		else:
+			queryset=Post.objects.filter(Q(author=user)& Q(status__in='drs'))
+		return queryset
 
