@@ -30,7 +30,7 @@ class SuperUserPostForm(forms.ModelForm):
 class AuthorPostForm(SuperUserPostForm):
 	def __init__(self,*args,**kwargs):
 		super().__init__(*args,**kwargs)
-		self.fields['status'].choices=[('d','draft'),('i','investigate')]
+		self.fields['status'].choices=[('d','Draft'),('s','Send to Manager')]
 
 	class Meta(SuperUserPostForm.Meta):
 		exclude=['author']

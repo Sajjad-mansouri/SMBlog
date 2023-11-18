@@ -3,7 +3,7 @@ from .models import Post,Category
 
 @admin.register(Post)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display=('title','slug','author','status','published')
+    list_display=('id','title','slug','author','status','published')
     list_filter=('published','status')
     search_fields=('title','description')
     prepopulated_fields={'slug':('title',)}

@@ -3,13 +3,14 @@ from django.views.generic import CreateView,ListView,UpdateView
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import  UserProfileForm,AuthorPostForm,SuperUserPostForm
 from blog.models import Post
-
-#for registration
-from .confirmation import EmailConfirmation
 from .forms import CustomCreationForm
 from .mixins import AuthorMixin
+#for registration
+from .confirmation import EmailConfirmation
+
 
 User_Model=get_user_model()
 class Register(CreateView):
@@ -28,7 +29,7 @@ class Register(CreateView):
 		return HttpResponseRedirect(self.get_success_url())
 
 
-class Profile(UpdateView):
+class Profile(LoginRequiredMixin,UpdateView):
 	model=User_Model
 	template_name='registration/profile.html'
 	form_class=UserProfileForm
@@ -37,30 +38,24 @@ class Profile(UpdateView):
 		return reverse('profile',args=(self.request.user.pk,))
 
 
-class CreatePost(AuthorMixin,CreateView):
-	model=Post
+class CreatePost(LoginRequiredMixin,AuthorMixin,CreateView):
+
 	template_name='registration/create_update_post.html'
 
 	def get_success_url(self):
 		return reverse('author-posts',args=(self.request.user.pk,))
 
-class UpdatePost(AuthorMixin,UpdateView):
+class UpdatePost(LoginRequiredMixin,AuthorMixin,UpdateView):
 	template_name='registration/create_update_post.html'
 	
-	def get_queryset(self):
-		posts=Post.objects.filter(author=self.request.user)
-		return posts
 
 	def get_success_url(self):
 		return reverse('author-posts',args=(self.request.user.pk,))
 
-class AuthorPostList(ListView):
+class AuthorPostList(LoginRequiredMixin,AuthorMixin,ListView):
 	template_name='registration/post_list.html'
 	paginate_by=3
 
-	def get_queryset(self):
-		user=self.request.user
-		posts=Post.objects.filter(author=user)
-		return posts
+
 
 

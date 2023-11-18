@@ -22,10 +22,10 @@ class Category(models.Model):
 
 class Post(models.Model):
 	STATUS_CHOICE=[
-		('d','draft'),
-		('p','publish'),
-		('r','reject'),
-		('i','investigate')
+		('d','Draft'),
+		('p','Publish'),
+		('r','Rejected'),
+		('s','Send to Manager')
 
 	]
 
