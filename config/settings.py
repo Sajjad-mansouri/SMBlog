@@ -172,6 +172,13 @@ class Dev(Configuration):
     EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
     EMAIL_USE_TLS = True
     EMAIL_PORT = config('EMAIL_PORT')
+
+
+    # Celery settings
+    CELERY_BROKER_URL = "redis://localhost:6379"
+    CELERY_RESULT_BACKEND = "redis://localhost:6379"
+    CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+    
     #DRF
 
     REST_FRAMEWORK = {

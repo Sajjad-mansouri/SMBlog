@@ -9,6 +9,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.views.generic import TemplateView
 from django.core.exceptions import  ValidationError
 from django.http import HttpResponseRedirect
+from .tasks import send_email
 
 UserModel = get_user_model()
 class EmailConfirmation:
@@ -36,22 +37,15 @@ class EmailConfirmation:
         to_email,
         html_email_template_name=None,
     ):
-        """
-        Send a django.core.mail.EmailMultiAlternatives to `to_email`.
-        """
+        send_email.delay(
+        subject_template_name,
+        email_template_name,
+        context,
+        from_email,
+        to_email,
+        html_email_template_name=None,
+    )
 
-        subject = loader.render_to_string(subject_template_name, context)
-        # Email subject *must not* contain newlines
-        subject = "".join(subject.splitlines())
-        body = loader.render_to_string(email_template_name, context)
-
-        email_message = EmailMultiAlternatives(subject, body, from_email, [to_email])
-
-        if html_email_template_name is not None:
-            html_email = loader.render_to_string(html_email_template_name, context)
-            email_message.attach_alternative(html_email, "text/html")
-
-        email_message.send()
 
     def get_users(self, email):
         """Given an email, return matching user(s) who should receive a reset.
@@ -90,7 +84,7 @@ class EmailConfirmation:
                 "domain": domain,
                 "site_name": site_name,
                 "uid": urlsafe_base64_encode(force_bytes(user.pk)),
-                "user": user,
+                "username": user.get_username(),
                 "token": self.token_generator.make_token(user),
                 "protocol": "https" if self.use_https else "http",
                 **(self.extra_email_context or {}),

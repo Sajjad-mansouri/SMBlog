@@ -4,7 +4,6 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from .models import Post,Category
 
-
 class Index(ListView):
 	template_name='blog/index.html'
 	context_object_name='posts'
@@ -47,7 +46,6 @@ class Search(ListView):
 	context_object_name='posts'
 
 	def get_queryset(self):
-		print('queryset')
 		self.search_var=self.request.GET.get('search')
 		try:
 			post=Post.objects.filter(
@@ -57,7 +55,6 @@ class Search(ListView):
 				)&
 				Q(status='p')
 				)
-			print(post)
 		except ValueError:
 			post=Post.objects.filter(status='p')
 
