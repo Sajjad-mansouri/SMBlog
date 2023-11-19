@@ -91,3 +91,4 @@ class PostPreview(LoginRequiredMixin,DetailView):
 			queryset=Post.objects.filter(Q(author=user)& Q(status__in='drs'))
 		return queryset
 
+

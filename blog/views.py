@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from django.views.generic import ListView,DetailView
+from django.views.generic import ListView,DetailView,FormView
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from .models import Post,Category
+from .forms import  ContactMeForm
 
 class Index(ListView):
 	template_name='blog/index.html'
@@ -64,3 +65,8 @@ class Search(ListView):
 		kwargs=super().get_context_data(**kwargs)
 		kwargs['search']=self.search_var
 		return kwargs
+
+
+class ContactMe(FormView):
+	template_name='blog/contact_me.html'
+	form_class=ContactMeForm

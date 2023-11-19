@@ -35,3 +35,4 @@ class AuthorPostForm(SuperUserPostForm):
 	class Meta(SuperUserPostForm.Meta):
 		exclude=['author']
 
+
