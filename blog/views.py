@@ -31,6 +31,7 @@ class PostDetailView(DetailView):
 class CategoryPostList(ListView):
 	template_name='blog/index.html'
 	context_object_name='posts'
+	paginate_by=3
 
 	def get_queryset(self):
 		cat_slug=self.kwargs.get('cat')

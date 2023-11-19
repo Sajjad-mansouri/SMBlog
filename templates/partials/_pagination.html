@@ -22,7 +22,7 @@
 
 
 		    <!-- first page -->
-		    <li class="page-item {% active_page 1%}"><a class="page-link" href="#">1</a></li>
+		    <li class="page-item {% active_page 1%}"><a class="page-link" href="{{request.path}}?page=1">1</a></li>
 		    <!-- if total pages number less than 5 -->
 
 		    		{% create_page_link "" %}
@@ -33,8 +33,7 @@
 
 
 			<!-- last page number -->
-		    <li class="page-item"><a class="page-link" href="#">{{page_obj.paginator.num_pages}}</a></li>
-
+		    <li class="page-item"><a class="page-link {% active_page num_pages %}" href="{{request.path}}?page={{num_pages}}">{{num_pages}}</a></li>
 
 
 
@@ -52,6 +51,6 @@
 		    </li>
 		  </ul>
 		</nav>
-	</div>
+
 {%endif%}
 {%endwith%}

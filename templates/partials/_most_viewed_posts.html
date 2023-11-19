@@ -1,0 +1,21 @@
+
+
+  <h2>
+    Most Viewed Posts:
+  </h2>
+  {%for post in posts%}
+  <div class="col m-2">
+    <div class="card">
+
+      <div class="card-body">
+        <a href="{% url 'blog:post_detail' post.slug%}">
+        <h5 class="card-title">{{post.title}}</h5>
+              </a>
+        <p class="card-text">{{post.description|safe|truncatewords:20}}</p>
+      </div>
+
+    </div>
+  </div>
+  {%endfor%}
+
+

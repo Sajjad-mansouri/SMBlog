@@ -2,59 +2,55 @@
 {% load humanize %}
 {% load blog_tags%}
 {%block content%}
-
-
-	<div class="col">
-{%if category%}
-<div class="alert alert-dark" role="alert">
-  Category : {{category}}
+<div class="row ">
+   <div class="col-8">
+      {%if category%}
+      <div class="alert alert-info" role="alert">
+         Category : {{category}}
+      </div>
+      {%endif%}
+      {%if search%}
+      <div class="alert alert-info" role="alert">
+         <h2>
+            search : {{search}}
+         </h2>
+      </div>
+      {%endif%}
+      <h2>Latest Posts:</h2>
+      {%for post in posts%}
+      <div class="card mb-3" >
+         <div class="row g-0">
+            <div class="col-md-4">
+               <img src="{{post.thumbnail.url}}" class="img-fluid rounded-start" alt="{{post.title}}-image">
+            </div>
+            <div class="col-md-8">
+               <div class="card-body">
+                  <h5 class="card-title"><a href="{%url 'blog:post_detail' post.slug%}">{{post.title}}</a></h5>
+                  <p class="card-text">{{post.description|safe|truncatewords:50|linebreaks}}</p>
+                  <p class="card-text"><small class="text-body-secondary">{{post.published|naturaltime}}</small></p>
+                  {%for category in post.category.all%}
+                  <a href="{% url 'blog:category_post_list' category.slug %}"><span class="badge text-bg-secondary">{{category.title}}</span></a> 
+                  {%endfor%}
+               </div>
+            </div>
+         </div>
+      </div>
+      {%empty%}
+      <div class="card mb-3" >
+         <div class="row g-0">
+            <div class="col-md-8">
+               <div class="card-body">
+                  <h5 class="card-title">no post</h5>
+               </div>
+            </div>
+         </div>
+      </div>
+      {%endfor%}
+      {% pagination %}
+   </div>
+   <div class="col-4">
+   	this
+   {% Most_viewed_posts %}
+   </div>
 </div>
-{%endif%}
-
-{%if search%}
-<div class="alert alert-dark" role="alert">
-  search : {{search}}
-</div>
-{%endif%}
-		{%for post in posts%}
-			<div class="card mb-3" >
-			  <div class="row g-0">
-			    <div class="col-md-4">
-			      <img src="{{post.thumbnail.url}}" class="img-fluid rounded-start" alt="{{post.title}}-image">
-			    </div>
-			    <div class="col-md-8">
-			      <div class="card-body">
-			        <h5 class="card-title"><a href="{%url 'blog:post_detail' post.slug%}">{{post.title}}</a></h5>
-			        <p class="card-text">{{post.description|safe|truncatewords:50|linebreaks}}</p>
-			        <p class="card-text"><small class="text-body-secondary">{{post.published|naturaltime}}</small></p>
-			        {%for category in post.category.all%}
-			       <a href="{% url 'blog:category_post_list' category.slug %}"><span class="badge text-bg-secondary">{{category.title}}</span></a> 
-			        {%endfor%}
-			      </div>
-			    </div>
-			  </div>
-			</div>
-
-		{%empty%}
-			<div class="card mb-3" >
-			  <div class="row g-0">
-
-			    <div class="col-md-8">
-			      <div class="card-body">
-			        <h5 class="card-title">no post</h5>
-
-			      </div>
-			    </div>
-			  </div>
-			</div>
-
-	    {%endfor%}
-
-{% pagination %}
-
-
-
-
-
-
 {%endblock%}

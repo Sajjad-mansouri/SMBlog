@@ -1,5 +1,7 @@
 from django import template
-from blog.models import Category
+from datetime import datetime,timedelta
+from django.db.models import Count,Q
+from blog.models import Category,Post
 
 register = template.Library()
 
@@ -35,6 +37,11 @@ def active_page(context,page_num):
 	if context['page_obj'].number == page_num:
 		return 'disabled '
 
+@register.inclusion_tag('partials/_most_viewed_posts.html')
+def Most_viewed_posts():
+	last_month=datetime.today()-timedelta(days=30)
+	posts=Post.objects.annotate(num_hits=Count('hits',filter=Q(hit__created__gt=last_month))).order_by('-num_hits','-published')[:3]
+	return {'posts':posts}
 
 
 
@@ -60,6 +67,7 @@ class CurrentLinkNode(template.Node):
 
 	def render(self, context):
 		page_obj=context['page_obj']
+		request=context['request']
 		number=page_obj.number
 
 		num_pages=page_obj.paginator.num_pages
@@ -70,7 +78,7 @@ class CurrentLinkNode(template.Node):
 				if page_num == number:
 					active='disabled'
 				result.append(
-					f'<li class="page-item"><a class="page-link {active}" href="#">{page_num}</a></li>'
+					f'<li class="page-item"><a class="page-link {active}" href="{request.path}?page={page_num}">{page_num}</a></li>'
 					)
 		else:
 			if number <=2:
@@ -79,7 +87,7 @@ class CurrentLinkNode(template.Node):
 					if page_num == number:
 						active='disabled'
 					result.append(
-						f'<li class="page-item"><a class="page-link {active}" href="#">{page_num}</a></li>'
+						f'<li class="page-item"><a class="page-link {active}" href="{request.path}?page={page_num}">{page_num}</a></li>'
 						)
 				result.append(
 						f'<li class="page-item"><a class="page-link disabled" href="#">...</a></li>'
@@ -90,7 +98,7 @@ class CurrentLinkNode(template.Node):
 					if page_num == number:
 						active='disabled'
 					result.append(
-							f'<li class="page-item"><a class="page-link {active}" href="#">{page_num}</a></li>'
+							f'<li class="page-item"><a class="page-link {active}" href="{request.path}?page={page_num}">{page_num}</a></li>'
 							)
 				result.append(
 						f'<li class="page-item"><a class="page-link disabled" href="#">...</a></li>'
@@ -105,7 +113,7 @@ class CurrentLinkNode(template.Node):
 					if page_num == number:
 						active='disabled'
 					result.append(
-						f'<li class="page-item"><a class="page-link {active}" href="#">{page_num}</a></li>'
+						f'<li class="page-item"><a class="page-link {active}" href="{request.path}?page={page_num}">{page_num}</a></li>'
 						)
 
 			else:
@@ -117,7 +125,7 @@ class CurrentLinkNode(template.Node):
 					if page_num == number:
 						active='disabled'
 					result.append(
-						f'<li class="page-item"><a class="page-link {active}" href="#">{page_num}</a></li>'
+						f'<li class="page-item"><a class="page-link {active}" href="{request.path}?page={page_num}">{page_num}</a></li>'
 						)
 				result.append(
 						f'<li class="page-item"><a class="page-link disabled" href="#">...</a></li>'
