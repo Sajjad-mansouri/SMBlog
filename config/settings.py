@@ -73,6 +73,7 @@ class Dev(Configuration):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'blog.middleware.SaveIpAddressMiddleWare',
     ]
 
     ROOT_URLCONF = 'config.urls'

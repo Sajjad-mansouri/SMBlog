@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post,Category
+from .models import Post,Category,IpAddress,Hit
 
 @admin.register(Post)
 class ArticleAdmin(admin.ModelAdmin):
@@ -14,3 +14,11 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter=(('status',))
     search_fields=('title','slug')
     prepopulated_fields={'slug':('title',)}
+
+@admin.register(IpAddress)
+class IpAdressAdmin(admin.ModelAdmin):
+    list_display=('ip',)
+
+@admin.register(Hit)
+class IpAdressAdmin(admin.ModelAdmin):
+    list_display=('ip',)

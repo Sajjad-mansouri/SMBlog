@@ -23,6 +23,7 @@
 			    <div class="col">
 			      <div class="card">
 			        <h3 class="card-title">{{post.title}}</h3>
+			        <p>views:{{post.hits.count}}</p>
 			        <p class="card-text"><small class="text-body-secondary">{{post.published|naturaltime}}</small></p>
 			        <p class="card-text">{{post.description|safe|linebreaks}}</p>
 			        

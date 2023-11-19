@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView,DetailView
+from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from .models import Post,Category
 
@@ -17,6 +18,14 @@ class Index(ListView):
 class PostDetailView(DetailView):
 	template_name='blog/post_detail.html'
 	queryset=Post.objects.filter(status='p')
+
+	def get_object(self):
+		slug=self.kwargs.get('slug')
+		post=get_object_or_404(self.queryset,slug=slug)
+		ip_address=self.request.ip_address
+		if not ip_address in post.hits.all():
+			post.hits.add(ip_address)
+		return post
 
 
 class CategoryPostList(ListView):

@@ -40,9 +40,23 @@ class Post(models.Model):
 	updated=models.DateTimeField(auto_now=True)
 	status=models.CharField(max_length=1,choices=STATUS_CHOICE)
 	comments = GenericRelation(Comment)
+	hits=models.ManyToManyField('IpAddress',through='Hit')
 
 	def __str__(self):
 		return self.title
 
 	class Meta:
 		ordering=['-published']
+
+
+class IpAddress(models.Model):
+	ip=models.GenericIPAddressField()
+
+
+class Hit(models.Model):
+	ip=models.ForeignKey(IpAddress,on_delete=models.CASCADE)
+	post=models.ForeignKey(Post,on_delete=models.CASCADE)
+	created=models.DateTimeField(auto_now_add=True)
+
+	class Meta:
+		unique_together=['ip','post']
