@@ -1,0 +1,31 @@
+<script type="text/javascript">
+
+	const submitter = document.getElementById("form-submit");
+	submitter.addEventListener('click',(e)=>{
+		e.preventDefault();
+		const form = document.getElementById("contactForm");
+		
+		const formData = new FormData(form, submitter);
+		form.reset();
+		const url = "{% url 'blog:contact_me' %}";
+		fetch(url,{
+			method:'POST',
+			body:formData
+		})
+		.then((response)=>{
+			if (response.ok){			
+				return response.json()
+			}
+		}).then((data)=>{
+			const div = document.getElementById('contact-div');
+			const paragraph = document.createElement('p');
+			paragraph.textContent = data.message;
+			div.insertBefore(paragraph, div.firstChild);
+			paragraph.className += 'alert alert-success';
+			setTimeout(() => {
+				  paragraph.parentNode.removeChild(paragraph);
+				}, 10000);
+		})
+	})
+
+</script>

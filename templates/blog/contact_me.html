@@ -23,7 +23,8 @@
                 {%endfor%}
               </div>
               <!-- contact form -->
-              <div class="col-md-6 wow animated fadeInRight" data-wow-delay=".2s">
+              <div class="col-md-6 wow animated fadeInRight" id='contact-div' data-wow-delay=".2s">
+
                   <form class="shake" role="form" method="POST" id="contactForm" name="contact-form" data-toggle="validator">
                   	{%csrf_token%}
                       <!-- Name -->
@@ -44,6 +45,7 @@
                           {{form.message|as_crispy_field}}
                       </div>
                       <!-- Form Submit -->
+
                       <div class="form-submit mt-5">
                           <button class="btn btn-success" type="submit" id="form-submit"><i class="material-icons mdi mdi-message-outline"></i> Send Message</button>
                           <div id="msgSubmit" class="h3 text-center hidden"></div>
@@ -54,5 +56,7 @@
           </div>
       </div>
     </section>
+
+{%include 'blog/script.html'%}
 
 {% endblock%}

@@ -5,6 +5,9 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from django.contrib.auth import get_user_model
 from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.messages.views import SuccessMessageMixin
+from django.http import JsonResponse
+from django.contrib import messages
 from .models import Post,Category
 from .forms import  ContactMeForm
 from account.tasks import send_email
@@ -71,7 +74,7 @@ class Search(ListView):
 		return kwargs
 
 
-class ContactMe(FormView):
+class ContactMe(SuccessMessageMixin,FormView):
 	template_name='blog/contact_me.html'
 	form_class=ContactMeForm
 	success_url=reverse_lazy('blog:contact_me')
@@ -115,6 +118,5 @@ class ContactMe(FormView):
 			to_email=self.owner.email
 
 			)
-
-
-		return super().form_valid(form)
+		messages=f'Dear {name}, Thank you for your valuable feedback.'
+		return JsonResponse({'message':messages})
