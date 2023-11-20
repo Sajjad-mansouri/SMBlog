@@ -56,6 +56,7 @@ class Dev(Configuration):
         "crispy_bootstrap5",
         'comment',
         'ckeditor',
+        'phone_field',
         #api
         'rest_framework',
         'rest_framework_simplejwt',

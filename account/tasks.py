@@ -19,7 +19,10 @@ def send_email(
         """
         Send a django.core.mail.EmailMultiAlternatives to `to_email`.
         """
-        subject = loader.render_to_string(subject_template_name, context)
+        if not isinstance(subject_template_name,str):
+            subject = loader.render_to_string(subject_template_name, context)
+        else:
+            subject=subject_template_name
         # Email subject *must not* contain newlines
         subject = "".join(subject.splitlines())
         body = loader.render_to_string(email_template_name, context)

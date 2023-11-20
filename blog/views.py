@@ -1,9 +1,13 @@
 from django.shortcuts import render
 from django.views.generic import ListView,DetailView,FormView
 from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
 from django.db.models import Q
+from django.contrib.auth import get_user_model
+from django.contrib.sites.shortcuts import get_current_site
 from .models import Post,Category
 from .forms import  ContactMeForm
+from account.tasks import send_email
 
 class Index(ListView):
 	template_name='blog/index.html'
@@ -70,3 +74,47 @@ class Search(ListView):
 class ContactMe(FormView):
 	template_name='blog/contact_me.html'
 	form_class=ContactMeForm
+	success_url=reverse_lazy('blog:contact_me')
+	owner=get_user_model().objects.get(is_superuser=True)
+	def get_context_data(self,**kwargs):
+		context=super().get_context_data(**kwargs)
+		context['owner']= self.owner
+		return context
+
+	def form_valid(self,form):
+		current_site = get_current_site(self.request).name
+		name=form.cleaned_data['name']
+		email=form.cleaned_data['email']
+		subject=form.cleaned_data['subject']
+		message=form.cleaned_data['message']
+		context={
+			'name':name,
+			'current_site':current_site,
+			'owner':self.owner.get_full_name(),
+			'message':message,
+			'email':email
+		}
+		email_template_name='blog/contact_email.html'
+		subject_template_name='blog/contact_subject.txt'
+		admin_email_template='blog/admin_email_template.html'
+		#send email to person who message
+		send_email.delay(
+			subject_template_name,
+			email_template_name,		
+			context,
+			from_email=None,
+			to_email=email
+			)
+
+		#send to admin
+		send_email.delay(
+			subject,
+			admin_email_template,
+			context,
+			from_email=None,
+			to_email=self.owner.email
+
+			)
+
+
+		return super().form_valid(form)
