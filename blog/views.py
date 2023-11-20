@@ -19,12 +19,12 @@ class Index(ListView):
 
 
 	def get_queryset(self):
-		return Post.objects.filter(status='p')
+		return Post.objects.prefetch_related('category').filter(status='p')
 
 
 class PostDetailView(DetailView):
 	template_name='blog/post_detail.html'
-	queryset=Post.objects.filter(status='p')
+	queryset=Post.objects.prefetch_related('hits').filter(status='p')
 
 	def get_object(self):
 		slug=self.kwargs.get('slug')
@@ -43,7 +43,7 @@ class CategoryPostList(ListView):
 	def get_queryset(self):
 		cat_slug=self.kwargs.get('cat')
 		self.category=Category.objects.get(slug=cat_slug)
-		return self.category.articles.filter(status='p')
+		return self.category.articles.prefetch_related('category').filter(status='p')
 	def get_context_data(self,**kwargs):
 		kwargs=super().get_context_data(**kwargs)
 		kwargs['category']=self.category
@@ -56,7 +56,7 @@ class Search(ListView):
 	def get_queryset(self):
 		self.search_var=self.request.GET.get('search')
 		try:
-			post=Post.objects.filter(
+			post=Post.objects.prefetch_related('category').filter(
 				(Q(title__icontains=self.search_var)|
 				Q(description__icontains=self.search_var)|
 				Q(author__first_name__icontains=self.search_var)
@@ -78,7 +78,7 @@ class ContactMe(SuccessMessageMixin,FormView):
 	template_name='blog/contact_me.html'
 	form_class=ContactMeForm
 	success_url=reverse_lazy('blog:contact_me')
-	owner=get_user_model().objects.get(is_superuser=True)
+	owner=get_user_model().objects.select_related('userinfo').get(is_superuser=True)
 	def get_context_data(self,**kwargs):
 		context=super().get_context_data(**kwargs)
 		context['owner']= self.owner

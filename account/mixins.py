@@ -7,9 +7,9 @@ class AuthorQuerySet:
 		print(dir(self))
 		user=self.request.user
 		if user.is_superuser:
-			posts=Post.objects.all()
+			posts=Post.objects.prefetch_related('category').all()
 		else:
-			posts=Post.objects.filter(author=user)
+			posts=Post.objects.prefetch_related('category').filter(author=user)
 		return posts
 
 

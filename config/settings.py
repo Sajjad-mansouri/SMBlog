@@ -57,6 +57,7 @@ class Dev(Configuration):
         'comment',
         'ckeditor',
         'phone_field',
+        "debug_toolbar",
         #api
         'rest_framework',
         'rest_framework_simplejwt',
@@ -66,6 +67,7 @@ class Dev(Configuration):
     ]
 
     MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
         'django.middleware.security.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         "corsheaders.middleware.CorsMiddleware",
@@ -180,6 +182,10 @@ class Dev(Configuration):
     CELERY_RESULT_BACKEND = "redis://localhost:6379"
     CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
     
+
+    INTERNAL_IPS = [
+    "127.0.0.1",
+    ]
     #DRF
 
     REST_FRAMEWORK = {

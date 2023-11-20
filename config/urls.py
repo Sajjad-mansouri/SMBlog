@@ -24,6 +24,7 @@ urlpatterns = [
     path("api/v1/", include("api.urls")),
     path('accounts/',include('account.urls')),
     path('comment/', include('comment.urls')),
+     path("__debug__/", include("debug_toolbar.urls")),
     path("",include('blog.urls')),
 
 ]
