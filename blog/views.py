@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView,DetailView,FormView
+from django.views.generic import ListView,DetailView,FormView,TemplateView
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.db.models import Q
@@ -8,7 +8,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import JsonResponse
 from django.contrib import messages
-from .models import Post,Category
+from .models import Post,Category,AboutCategory
 from .forms import  ContactMeForm
 from account.tasks import send_email
 
@@ -78,8 +78,10 @@ class ContactMe(SuccessMessageMixin,FormView):
 	template_name='blog/contact_me.html'
 	form_class=ContactMeForm
 	success_url=reverse_lazy('blog:contact_me')
-
-	owner=get_user_model().objects.get(is_superuser=True)
+	try:
+		owner=get_user_model().objects.get(is_superuser=True)
+	except Exception as e:
+		print(e)
 	def get_context_data(self,**kwargs):
 		context=super().get_context_data(**kwargs)
 		context['owner']= self.owner
@@ -121,3 +123,7 @@ class ContactMe(SuccessMessageMixin,FormView):
 			)
 		messages=f'Dear {name}, Thank you for your valuable feedback.'
 		return JsonResponse({'message':messages})
+
+class About(ListView):
+	template_name='blog/about.html'
+	queryset=AboutCategory.objects.prefetch_related('about_set')

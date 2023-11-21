@@ -5,7 +5,7 @@ from phone_field import PhoneField
 
 class MyUser(AbstractUser):
 	email=models.EmailField(max_length=200,unique=True)
-	is_author=models.BooleanField(default=False)
+	is_author=models.BooleanField(default=True)
 	profile_image=models.ImageField(upload_to='profile_image/%Y/',null=True)
 
 
@@ -14,9 +14,8 @@ class UserInfo(models.Model):
 	title=models.CharField(max_length=200)
 	description=models.TextField(blank=True)
 	phone = PhoneField(blank=True, help_text='Contact phone number')
-	email=models.EmailField(null=True)
 	LinkedIn =models.URLField(blank=True)
-	address=models.TextField(null=True)
+	address=models.TextField(blank=True)
 
 
 class Portfolio(models.Model):

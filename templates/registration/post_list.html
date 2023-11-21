@@ -42,7 +42,7 @@
 
 
                                 {%if post.status == 'p' %}
-                                <a href="{%url 'blog:post_detail' post.pk %}" class="btn btn-secondary">View in Site</a>
+                                <a href="{%url 'blog:post_detail' post.slug %}" class="btn btn-secondary">View in Site</a>
                                     {%if  request.user.is_superuser%}
                                     <a href="{%url 'update-post' post.pk %}" class="btn btn-success">edit Post</a>
                                     <a href="" class="btn btn-danger">Delete Post</a>

@@ -129,6 +129,7 @@ class EmailConfirmView(TemplateView):
                     # avoids the possibility of leaking the token in the
                     # HTTP Referer header.
                     self.user.is_active=True
+                    self.user.save()
 
                     self.request.session[INTERNAL_RESET_SESSION_TOKEN] = token
                     redirect_url = self.request.path.replace(
@@ -136,7 +137,7 @@ class EmailConfirmView(TemplateView):
                     )
                     return HttpResponseRedirect(redirect_url)
 
-        # Display the "Password reset unsuccessful" page.
+        # Display the "confirmation email unsuccessful" page.
         return self.render_to_response(self.get_context_data())
 
     def get_user(self, uidb64):

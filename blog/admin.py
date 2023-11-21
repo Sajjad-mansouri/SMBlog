@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post,Category,IpAddress,Hit
+from .models import Post,Category,IpAddress,Hit,About,AboutCategory
 
 @admin.register(Post)
 class ArticleAdmin(admin.ModelAdmin):
@@ -22,3 +22,11 @@ class IpAdressAdmin(admin.ModelAdmin):
 @admin.register(Hit)
 class IpAdressAdmin(admin.ModelAdmin):
     list_display=('ip',)
+
+@admin.register(About)
+class AboutAdmin(admin.ModelAdmin):
+    list_display=['about_category',]
+
+@admin.register(AboutCategory)
+class AboutAdmin(admin.ModelAdmin):
+    list_display=['title']

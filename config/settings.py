@@ -108,9 +108,9 @@ class Dev(Configuration):
     DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'myproject',
-        'USER': 'myprojectuser',
-        'PASSWORD': 'dataManager12',
+        'NAME': config('DATABASAE_NAME'),
+        'USER': config('DATABASAE_USER'),
+        'PASSWORD': config('DATABASE_PASSWORD'),
         'HOST': 'localhost',
         'PORT': '',
                 }
@@ -191,6 +191,13 @@ class Dev(Configuration):
     INTERNAL_IPS = [
     "127.0.0.1",
     ]
+
+    CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+        }
+    }
     #DRF
 
     REST_FRAMEWORK = {

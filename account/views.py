@@ -86,7 +86,8 @@ class PostPreview(LoginRequiredMixin,DetailView):
 	def get_queryset(self):
 		user=self.request.user
 		if user.is_superuser:
-			queryset= Post.objects.filter(status!='p')
+			print(Post.objects.all())
+			queryset= Post.objects.exclude(status = 'p')
 		else:
 			queryset=Post.objects.filter(Q(author=user)& Q(status__in='drs'))
 		return queryset

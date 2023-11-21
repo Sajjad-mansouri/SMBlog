@@ -60,3 +60,13 @@ class Hit(models.Model):
 
 	class Meta:
 		unique_together=['ip','post']
+
+
+class AboutCategory(models.Model):
+	title=models.CharField(max_length=200)
+	description=models.TextField(blank=True)
+	def __str__(self):
+		return self.title
+class About(models.Model):
+	about_category=models.ForeignKey(AboutCategory,on_delete=models.SET_NULL,null=True)
+	description=models.TextField(blank=True)
