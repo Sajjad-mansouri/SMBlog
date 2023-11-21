@@ -2,17 +2,18 @@ from django.urls import path,include
 from . import views
 from . import confirmation
 
+extra_patterns=[
+    path('<int:pk>/',views.Profile.as_view(),name='profile'),
+    path('create-post/',views.CreatePost.as_view(),name='create-post'),
+    path('posts/<int:pk>/',views.AuthorPostList.as_view(),name='author-posts'),
+    path('posts/<int:pk>/',views.UpdatePost.as_view(),name='update-post'),
+    path('posts/<int:pk>/',views.UpdatePost.as_view(),name='update-post'),
+    path('posts/<int:pk>/delete',views.DeletePost.as_view(),name='delete-post'),
+    path('posts/preview/<int:pk>/',views.PostPreview.as_view(),name='post-preview'),
+]
 urlpatterns=[
-    path('profile/<int:pk>/',views.Profile.as_view(),name='profile'),
-    path('profile/create-post/',views.CreatePost.as_view(),name='create-post'),
-    path('profile/<int:pk>/posts/',views.AuthorPostList.as_view(),name='author-posts'),
-    path('profile/posts/<int:pk>/',views.UpdatePost.as_view(),name='update-post'),
-    path('profile/posts/<int:pk>/',views.UpdatePost.as_view(),name='update-post'),
-    path('profile/posts/<int:pk>/delete',views.DeletePost.as_view(),name='delete-post'),
-    path('profile/posts/preview/<int:pk>/',views.PostPreview.as_view(),name='post-preview'),
 
-
-
+    path("profile/", include(extra_patterns)),
 	path('register/',views.Register.as_view(),name='register'),
     path(
         "confirm/<uidb64>/<token>/",
