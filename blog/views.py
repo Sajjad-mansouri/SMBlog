@@ -19,7 +19,7 @@ class Index(ListView):
 
 
 	def get_queryset(self):
-		return Post.objects.prefetch_related('category').filter(status='p')
+		return Post.objects.prefetch_related('category').select_related('author').filter(status='p')
 
 
 class PostDetailView(DetailView):
@@ -43,7 +43,7 @@ class CategoryPostList(ListView):
 	def get_queryset(self):
 		cat_slug=self.kwargs.get('cat')
 		self.category=Category.objects.get(slug=cat_slug)
-		return self.category.articles.prefetch_related('category').filter(status='p')
+		return self.category.articles.prefetch_related('category').select_related('author').filter(status='p')
 	def get_context_data(self,**kwargs):
 		kwargs=super().get_context_data(**kwargs)
 		kwargs['category']=self.category
