@@ -4,7 +4,6 @@ from blog.models import Post
 
 class AuthorQuerySet:
 	def get_queryset(self):
-		print(dir(self))
 		user=self.request.user
 		if user.is_superuser:
 			posts=Post.objects.prefetch_related('category').all()

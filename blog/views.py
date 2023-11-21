@@ -75,13 +75,13 @@ class Search(ListView):
 
 
 class ContactMe(SuccessMessageMixin,FormView):
-	template_name='blog/contact_me.html'
+	template_name='contact/contact_me.html'
 	form_class=ContactMeForm
 	success_url=reverse_lazy('blog:contact_me')
 	try:
 		owner=get_user_model().objects.get(is_superuser=True)
 	except Exception as e:
-		print(e)
+		pass
 	def get_context_data(self,**kwargs):
 		context=super().get_context_data(**kwargs)
 		context['owner']= self.owner
@@ -100,9 +100,9 @@ class ContactMe(SuccessMessageMixin,FormView):
 			'message':message,
 			'email':email
 		}
-		email_template_name='blog/contact_email.html'
-		subject_template_name='blog/contact_subject.txt'
-		admin_email_template='blog/admin_email_template.html'
+		email_template_name='contact/contact_email.html'
+		subject_template_name='contact/contact_subject.txt'
+		admin_email_template='contact/admin_email_template.html'
 		#send email to person who message
 		send_email.delay(
 			subject_template_name,
@@ -125,5 +125,5 @@ class ContactMe(SuccessMessageMixin,FormView):
 		return JsonResponse({'message':messages})
 
 class About(ListView):
-	template_name='blog/about.html'
+	template_name='about/about.html'
 	queryset=AboutCategory.objects.prefetch_related('about_set')

@@ -32,7 +32,7 @@ class Register(CreateView):
 
 class Profile(LoginRequiredMixin,UpdateView):
 	model=User_Model
-	template_name='registration/profile.html'
+	template_name='profile/profile.html'
 	form_class=UserProfileForm
 
 	def get_success_url(self):
@@ -41,13 +41,13 @@ class Profile(LoginRequiredMixin,UpdateView):
 
 class CreatePost(LoginRequiredMixin,AuthorMixin,CreateView):
 
-	template_name='registration/create_update_post.html'
+	template_name='profile/create_update_post.html'
 
 	def get_success_url(self):
 		return reverse('author-posts',args=(self.request.user.pk,))
 
 class UpdatePost(LoginRequiredMixin,AuthorMixin,UpdateView):
-	template_name='registration/create_update_post.html'
+	template_name='profile/create_update_post.html'
 	
 
 	def get_success_url(self):
@@ -61,14 +61,14 @@ class UpdatePost(LoginRequiredMixin,AuthorMixin,UpdateView):
 		return queryset
 
 class AuthorPostList(LoginRequiredMixin,AuthorMixin,ListView):
-	template_name='registration/post_list.html'
+	template_name='profile/post_list.html'
 	paginate_by=5
 
 
 
 
 class DeletePost(LoginRequiredMixin,DeleteView):
-	template_name='registration/confirm_delete.html'
+	template_name='profile/confirm_delete.html'
 	def get_success_url(self):
 		return reverse('author-posts',args=(self.request.user.pk,))
 
@@ -86,7 +86,6 @@ class PostPreview(LoginRequiredMixin,DetailView):
 	def get_queryset(self):
 		user=self.request.user
 		if user.is_superuser:
-			print(Post.objects.all())
 			queryset= Post.objects.exclude(status = 'p')
 		else:
 			queryset=Post.objects.filter(Q(author=user)& Q(status__in='drs'))

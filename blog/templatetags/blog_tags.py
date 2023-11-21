@@ -50,7 +50,6 @@ def create_page_link(parser, token):
 	try:
 		# split_contents() knows not to split quoted strings.
 		tag_name, format_string = token.split_contents()
-		print(format_string)
 	except ValueError:
 		raise template.TemplateSyntaxError(
 			"%r tag requires a single argument" % token.contents.split()[0]
