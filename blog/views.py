@@ -78,7 +78,8 @@ class ContactMe(SuccessMessageMixin,FormView):
 	template_name='blog/contact_me.html'
 	form_class=ContactMeForm
 	success_url=reverse_lazy('blog:contact_me')
-	owner=get_user_model().objects.select_related('userinfo').get(is_superuser=True)
+
+	owner=get_user_model().objects.get(is_superuser=True)
 	def get_context_data(self,**kwargs):
 		context=super().get_context_data(**kwargs)
 		context['owner']= self.owner
