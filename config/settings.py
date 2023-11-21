@@ -58,6 +58,7 @@ class Dev(Configuration):
         'ckeditor',
         'phone_field',
         "debug_toolbar",
+        'widget_tweaks',
         #api
         'rest_framework',
         'rest_framework_simplejwt',

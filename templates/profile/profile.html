@@ -1,15 +1,20 @@
 {%extends 'profile/profile_base.html'%}
 {% load crispy_forms_tags %}
 {%block content%}
-
+<a href="{% url 'password_change'%}"><button class="btn btn-secondary">change password</button></a>
                 <div class="col-lg-8">
                     <form method='POST' enctype="multipart/form-data">
                         {%csrf_token%}
                     <div class="card">
                         <div class="card-body">
+
 {{form|crispy}}
+
                             <div class="row">
                                 <div class="col-sm-3"></div>
+                                
+                                    
+                                
                                 <div class="col-sm-9 text-secondary">
                                     <input type="submit" class="btn btn-primary px-4" value="Save Changes">
                                 </div>
