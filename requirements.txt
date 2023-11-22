@@ -1,6 +1,5 @@
 amqp
 asgiref
-billiard
 celery==5.2.7
 click
 click-didyoumean
@@ -23,7 +22,7 @@ django-widget-tweaks
 djangorestframework
 djangorestframework-simplejwt
 gunicorn
-kombu
+
 packaging
 phonenumbers
 Pillow
