@@ -23,6 +23,7 @@ django-widget-tweaks
 djangorestframework
 djangorestframework-simplejwt
 gunicorn
+kombu==5.3.0b3
 packaging
 phonenumbers
 Pillow
